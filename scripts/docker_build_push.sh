@@ -125,6 +125,10 @@ if [[ "${GITHUB_EVENT_NAME}" == "push" && "${GITHUB_REF}" == "refs/heads/master"
   DOCKER_TAGS="${DOCKER_TAGS} -t ${REPO_NAME}:${TAG}${PLATFORM_SUFFIX}"
 elif [[ "${GITHUB_EVENT_NAME}" == "release" ]]; then
   DOCKER_TAGS="${DOCKER_TAGS} -t ${REPO_NAME}:${TAG}${PLATFORM_SUFFIX}"
+  if [[ "${TAG}" == "lean" && "${BUILD_PLATFORM}" == "linux/amd64" ]]; then
+    # top level image
+    DOCKER_TAGS="${DOCKER_TAGS} -t ${REPO_NAME}"
+  fi
 fi
 
 if [ -z "${DOCKERHUB_TOKEN}" ]; then
