@@ -123,6 +123,8 @@ DOCKER_TAGS="${DOCKER_TAGS} -t ${REPO_NAME}:${LATEST_TAG}${TAG_SUFFIX}${PLATFORM
 if [[ "${GITHUB_EVENT_NAME}" == "push" && "${GITHUB_REF}" == "refs/heads/master" && "${TAG}" == "dev" ]]; then
   # the `apache-superset:dev` docker tag points to top of master
   DOCKER_TAGS="${DOCKER_TAGS} -t ${REPO_NAME}:${TAG}${PLATFORM_SUFFIX}"
+elif [[ "${GITHUB_EVENT_NAME}" == "release" ]]; then
+  DOCKER_TAGS="${DOCKER_TAGS} -t ${REPO_NAME}:${TAG}${PLATFORM_SUFFIX}"
 fi
 
 if [ -z "${DOCKERHUB_TOKEN}" ]; then
