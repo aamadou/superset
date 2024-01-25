@@ -8,7 +8,7 @@ on:
     types: [synchronize, opened, reopened, ready_for_review]
 
 jobs:
-  config:
+  check-secret:
     runs-on: "ubuntu-latest"
     outputs:
       has-secrets: ${{ steps.check.outputs.has-secrets }}
@@ -27,7 +27,7 @@ jobs:
             echo "no secrets!"
           fi
   docker-build:
-    if: steps.config.outputs.has-secrets == 'true'
+    if: steps.check-secret.outputs.has-secrets == 'true'
     name: docker-build
     runs-on: ubuntu-latest
     strategy:
@@ -63,8 +63,8 @@ jobs:
           ./scripts/docker_build_push.py "" ${{ matrix.target }} ${{ matrix.platform }}
 
   ephemeral-docker-build:
-    needs: config
-    if: needs.config.outputs.has-secrets
+    needs: check-secret
+    if: steps.check-secret.outputs.has-secrets == 'true'
     name: docker-build
     runs-on: ubuntu-latest
     steps:
