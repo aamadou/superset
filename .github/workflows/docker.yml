@@ -20,15 +20,14 @@ jobs:
           DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
         run: |
           if [[ -n "$DOCKERHUB_USER" && -n "$DOCKERHUB_TOKEN" ]]; then
-            echo "::set-output name=has-secrets::true"
+            echo "has-secrets=true" >> "$GITHUB_OUTPUT"
             echo "has secrets!"
           else
-            echo "::set-output name=has-secrets::false"
+            echo "has-secrets=false" >> "$GITHUB_OUTPUT"
             echo "no secrets!"
           fi
   docker-build:
-    needs: config
-    if: needs.config.outputs.has-secrets == 'true'
+    if: steps.config.outputs.has-secrets == 'true'
     name: docker-build
     runs-on: ubuntu-latest
     strategy:
