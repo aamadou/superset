@@ -27,7 +27,7 @@ jobs:
             echo "no secrets!"
           fi
   docker-build:
-    if: steps.check-secret.outputs.has-secrets == 'true'
+    #if: steps.check-secret.outputs.has-secrets == 'true'
     name: docker-build
     runs-on: ubuntu-latest
     strategy:
