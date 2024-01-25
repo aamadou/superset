@@ -20,10 +20,10 @@ jobs:
           DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
         run: |
           if [[ -n "$DOCKERHUB_USER" && -n "$DOCKERHUB_TOKEN" ]]; then
-            echo "has-secrets=true" >> "$GITHUB_ENV"
+            echo "::set-output name=has-secrets::true"
             echo "has secrets!"
           else
-            echo "has-secrets=false" >> "$GITHUB_ENV"
+            echo "::set-output name=has-secrets::false"
             echo "no secrets!"
           fi
   docker-build:
