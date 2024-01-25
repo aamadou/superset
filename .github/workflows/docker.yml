@@ -1,4 +1,4 @@
-name: Docker
+name: Docker Builds
 
 on:
   push:
@@ -26,8 +26,8 @@ jobs:
             echo "has-secrets=false" >> "$GITHUB_OUTPUT"
             echo "no secrets!"
           fi
-  docker-build:
-    #if: steps.check-secret.outputs.has-secrets == 'true'
+  build:
+    if: steps.check-secret.outputs.has-secrets == 'true'
     name: docker-build
     runs-on: ubuntu-latest
     strategy:
@@ -62,7 +62,7 @@ jobs:
         run: |
           ./scripts/docker_build_push.py "" ${{ matrix.target }} ${{ matrix.platform }}
 
-  ephemeral-docker-build:
+  ephemeral-build:
     needs: check-secret
     if: steps.check-secret.outputs.has-secrets == 'true'
     name: docker-build
