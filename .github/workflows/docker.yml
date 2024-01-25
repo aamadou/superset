@@ -17,7 +17,6 @@ jobs:
   docker-build:
     needs: check-secrets
     if: needs.check-secrets.outputs.has-secrets == 'true'
-    name: docker-build
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -54,7 +53,6 @@ jobs:
   ephemeral-docker-build:
     needs: check-secrets
     if: needs.check-secrets.outputs.has-secrets == 'true'
-    name: docker-build
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout ${{ github.ref }} ( ${{ github.sha }} )"
